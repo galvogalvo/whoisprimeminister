@@ -1,152 +1,390 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width">
-<title>Who Is Prime Minister?</title>
-<link href="https://fonts.googleapis.com/css?family=Philosopher:700|Domine" rel="stylesheet" type="text/css">
-<meta name="description" content="Who is the current Prime Minister of the United Kingdom?" />
-<meta name="keywords" content="prime minister, united kingdom, politics, uk, parliament" />
-<meta name="author" content="Anthony Galvin">
-<link rel="shortcut icon" type="image/x-icon" href="//whoisprimeminister.com/favicon.ico">
-<style type='text/css'>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Who Is Prime Minister?</title>
+        <link
+            href="https://fonts.googleapis.com/css?family=Philosopher:700|Domine"
+            rel="stylesheet"
+            type="text/css"
+        />
+        <meta
+            name="description"
+            content="Who is the current Prime Minister of the United Kingdom?"
+        />
+        <meta
+            name="keywords"
+            content="prime minister, united kingdom, politics, uk, parliament"
+        />
+        <meta name="author" content="Anthony Galvin" />
+        <link
+            rel="shortcut icon"
+            type="image/x-icon"
+            href="//whoisprimeminister.com/favicon.ico"
+        />
+        <style type="text/css">
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+            }
+            html {
+                scroll-snap-type: y mandatory;
+            }
+            section {
+                height: 100vh;
+                scroll-snap-align: start;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0 2rem;
+                box-sizing: border-box;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            }
+            section.conservative {
+                background-color: #1b7ee0;
+            }
+            section.labour {
+                background-color: #e01b1b;
+            }
+            section.liberal {
+                background-color: #fab733;
+            }
+            section.national {
+                background-color: #757573;
+            }
+            section.coalition {
+                background-color: #757573;
+            }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-html {
-  scroll-snap-type: y mandatory;
-}
-section {
-  height: 100vh;
-  scroll-snap-align: start;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 2rem;
-  box-sizing: border-box;
-  border-bottom: 1px solid rgba(0,0,0,0.2);
-}
-section.conservative { background-color: #1B7EE0; }
-section.labour       { background-color: #E01B1B; }
-section.liberal      { background-color: #FAB733; }
-section.national     { background-color: #757573; }
-section.coalition    { background-color: #757573; }
+            .pm-card {
+                width: 50%;
+                text-align: center;
+            }
+            h1 {
+                color: #fff;
+                font-family: "Philosopher", sans-serif;
+                font-size: 3em;
+                margin: 0 0 0.25em;
+            }
+            p {
+                color: #fff;
+                font-family: "Domine", serif;
+                font-size: 1.2em;
+                margin: 0;
+            }
+            .pm-dates {
+                color: rgba(255, 255, 255, 0.8);
+                margin-top: 0.5em;
+            }
+            a {
+                text-decoration: none;
+                color: #fff;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            footer {
+                background-color: #000;
+                color: #fff;
+                font-family: "Domine", serif;
+                font-size: 0.75em;
+                text-align: center;
+                padding: 0.5rem;
+            }
+            footer a {
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="pms"></div>
+        <footer>
+            <a href="https://anthonygalvin.com">anthonygalvin.com</a>
+        </footer>
+        <script>
+            const pms = [
+                {
+                    name: "Keir Starmer",
+                    party: "labour",
+                    start: "Jul 2024",
+                    end: null,
+                    wiki: "Keir_Starmer",
+                },
+                {
+                    name: "Rishi Sunak",
+                    party: "conservative",
+                    start: "Oct 2022",
+                    end: "Jul 2024",
+                    wiki: "Rishi_Sunak",
+                },
+                {
+                    name: "Liz Truss",
+                    party: "conservative",
+                    start: "Sep 2022",
+                    end: "Oct 2022",
+                    wiki: "Liz_Truss",
+                },
+                {
+                    name: "Boris Johnson",
+                    party: "conservative",
+                    start: "Jul 2019",
+                    end: "Sep 2022",
+                    wiki: "Boris_Johnson",
+                },
+                {
+                    name: "Theresa May",
+                    party: "conservative",
+                    start: "Jul 2016",
+                    end: "Jul 2019",
+                    wiki: "Theresa_May",
+                },
+                {
+                    name: "David Cameron",
+                    party: "conservative",
+                    start: "May 2010",
+                    end: "Jul 2016",
+                    wiki: "David_Cameron",
+                },
+                {
+                    name: "Gordon Brown",
+                    party: "labour",
+                    start: "Jun 2007",
+                    end: "May 2010",
+                    wiki: "Gordon_Brown",
+                },
+                {
+                    name: "Tony Blair",
+                    party: "labour",
+                    start: "May 1997",
+                    end: "Jun 2007",
+                    wiki: "Tony_Blair",
+                },
+                {
+                    name: "John Major",
+                    party: "conservative",
+                    start: "Nov 1990",
+                    end: "May 1997",
+                    wiki: "John_Major",
+                },
+                {
+                    name: "Margaret Thatcher",
+                    party: "conservative",
+                    start: "May 1979",
+                    end: "Nov 1990",
+                    wiki: "Margaret_Thatcher",
+                },
+                {
+                    name: "James Callaghan",
+                    party: "labour",
+                    start: "Apr 1976",
+                    end: "May 1979",
+                    wiki: "James_Callaghan",
+                },
+                {
+                    name: "Harold Wilson",
+                    party: "labour",
+                    start: "Mar 1974",
+                    end: "Apr 1976",
+                    wiki: "Harold_Wilson",
+                },
+                {
+                    name: "Edward Heath",
+                    party: "conservative",
+                    start: "Jun 1970",
+                    end: "Mar 1974",
+                    wiki: "Edward_Heath",
+                },
+                {
+                    name: "Harold Wilson",
+                    party: "labour",
+                    start: "Oct 1964",
+                    end: "Jun 1970",
+                    wiki: "Harold_Wilson",
+                },
+                {
+                    name: "Alec Douglas-Home",
+                    party: "conservative",
+                    start: "Oct 1963",
+                    end: "Oct 1964",
+                    wiki: "Alec_Douglas-Home",
+                },
+                {
+                    name: "Harold Macmillan",
+                    party: "conservative",
+                    start: "Jan 1957",
+                    end: "Oct 1963",
+                    wiki: "Harold_Macmillan",
+                },
+                {
+                    name: "Anthony Eden",
+                    party: "conservative",
+                    start: "Apr 1955",
+                    end: "Jan 1957",
+                    wiki: "Anthony_Eden",
+                },
+                {
+                    name: "Winston Churchill",
+                    party: "conservative",
+                    start: "Oct 1951",
+                    end: "Apr 1955",
+                    wiki: "Winston_Churchill",
+                },
+                {
+                    name: "Clement Attlee",
+                    party: "labour",
+                    start: "Jul 1945",
+                    end: "Oct 1951",
+                    wiki: "Clement_Attlee",
+                },
+                {
+                    name: "Winston Churchill",
+                    party: "coalition",
+                    start: "May 1940",
+                    end: "Jul 1945",
+                    wiki: "Winston_Churchill",
+                },
+                {
+                    name: "Neville Chamberlain",
+                    party: "conservative",
+                    start: "May 1937",
+                    end: "May 1940",
+                    wiki: "Neville_Chamberlain",
+                },
+                {
+                    name: "Stanley Baldwin",
+                    party: "conservative",
+                    start: "Jun 1935",
+                    end: "May 1937",
+                    wiki: "Stanley_Baldwin",
+                },
+                {
+                    name: "Ramsay MacDonald",
+                    party: "national",
+                    start: "Jun 1929",
+                    end: "Jun 1935",
+                    wiki: "Ramsay_MacDonald",
+                },
+                {
+                    name: "Stanley Baldwin",
+                    party: "conservative",
+                    start: "Nov 1924",
+                    end: "Jun 1929",
+                    wiki: "Stanley_Baldwin",
+                },
+                {
+                    name: "Ramsay MacDonald",
+                    party: "labour",
+                    start: "Jan 1924",
+                    end: "Nov 1924",
+                    wiki: "Ramsay_MacDonald",
+                },
+                {
+                    name: "Stanley Baldwin",
+                    party: "conservative",
+                    start: "May 1923",
+                    end: "Jan 1924",
+                    wiki: "Stanley_Baldwin",
+                },
+                {
+                    name: "Andrew Bonar Law",
+                    party: "conservative",
+                    start: "Oct 1922",
+                    end: "May 1923",
+                    wiki: "Andrew_Bonar_Law",
+                },
+                {
+                    name: "David Lloyd George",
+                    party: "liberal",
+                    start: "Dec 1916",
+                    end: "Oct 1922",
+                    wiki: "David_Lloyd_George",
+                },
+                {
+                    name: "H.H. Asquith",
+                    party: "liberal",
+                    start: "Apr 1908",
+                    end: "Dec 1916",
+                    wiki: "H._H._Asquith",
+                },
+                {
+                    name: "Henry Campbell-Bannerman",
+                    party: "liberal",
+                    start: "Dec 1905",
+                    end: "Apr 1908",
+                    wiki: "Henry_Campbell-Bannerman",
+                },
+                {
+                    name: "Arthur Balfour",
+                    party: "conservative",
+                    start: "Jul 1902",
+                    end: "Dec 1905",
+                    wiki: "Arthur_Balfour",
+                },
+                {
+                    name: "Lord Salisbury",
+                    party: "conservative",
+                    start: "Jun 1895",
+                    end: "Jul 1902",
+                    wiki: "Robert_Gascoyne-Cecil,_3rd_Marquess_of_Salisbury",
+                },
+            ];
 
-.pm-card {
-  width: 50%;
-  text-align: center;
-}
-h1 {
-  color: #FFF;
-  font-family: "Philosopher", sans-serif;
-  font-size: 3em;
-  margin: 0 0 0.25em;
-}
-p {
-  color: #FFF;
-  font-family: "Domine", serif;
-  font-size: 1.2em;
-  margin: 0;
-}
-.pm-dates {
-  color: rgba(255,255,255,0.8);
-  margin-top: 0.5em;
-}
-a {
-  text-decoration: none;
-  color: #FFF;
-}
-a:hover {
-  text-decoration: underline;
-}
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #000;
-  color: #fff;
-  font-family: "Domine", serif;
-  font-size: 0.75em;
-  text-align: center;
-  padding: 0.5rem;
-}
-footer a {
-  color: #fff;
-}
-</style>
-</head>
-<body>
-  <div id="pms"></div>
-  <footer><a href="https://anthonygalvin.com">anthonygalvin.com</a></footer>
-  <script>
-  const pms = [
-    { name: "Keir Starmer",             party: "labour",       start: "Jul 2024", end: null,       wiki: "Keir_Starmer" },
-    { name: "Rishi Sunak",              party: "conservative", start: "Oct 2022", end: "Jul 2024", wiki: "Rishi_Sunak" },
-    { name: "Liz Truss",                party: "conservative", start: "Sep 2022", end: "Oct 2022", wiki: "Liz_Truss" },
-    { name: "Boris Johnson",            party: "conservative", start: "Jul 2019", end: "Sep 2022", wiki: "Boris_Johnson" },
-    { name: "Theresa May",              party: "conservative", start: "Jul 2016", end: "Jul 2019", wiki: "Theresa_May" },
-    { name: "David Cameron",            party: "conservative", start: "May 2010", end: "Jul 2016", wiki: "David_Cameron" },
-    { name: "Gordon Brown",             party: "labour",       start: "Jun 2007", end: "May 2010", wiki: "Gordon_Brown" },
-    { name: "Tony Blair",               party: "labour",       start: "May 1997", end: "Jun 2007", wiki: "Tony_Blair" },
-    { name: "John Major",               party: "conservative", start: "Nov 1990", end: "May 1997", wiki: "John_Major" },
-    { name: "Margaret Thatcher",        party: "conservative", start: "May 1979", end: "Nov 1990", wiki: "Margaret_Thatcher" },
-    { name: "James Callaghan",          party: "labour",       start: "Apr 1976", end: "May 1979", wiki: "James_Callaghan" },
-    { name: "Harold Wilson",            party: "labour",       start: "Mar 1974", end: "Apr 1976", wiki: "Harold_Wilson" },
-    { name: "Edward Heath",             party: "conservative", start: "Jun 1970", end: "Mar 1974", wiki: "Edward_Heath" },
-    { name: "Harold Wilson",            party: "labour",       start: "Oct 1964", end: "Jun 1970", wiki: "Harold_Wilson" },
-    { name: "Alec Douglas-Home",        party: "conservative", start: "Oct 1963", end: "Oct 1964", wiki: "Alec_Douglas-Home" },
-    { name: "Harold Macmillan",         party: "conservative", start: "Jan 1957", end: "Oct 1963", wiki: "Harold_Macmillan" },
-    { name: "Anthony Eden",             party: "conservative", start: "Apr 1955", end: "Jan 1957", wiki: "Anthony_Eden" },
-    { name: "Winston Churchill",        party: "conservative", start: "Oct 1951", end: "Apr 1955", wiki: "Winston_Churchill" },
-    { name: "Clement Attlee",           party: "labour",       start: "Jul 1945", end: "Oct 1951", wiki: "Clement_Attlee" },
-    { name: "Winston Churchill",        party: "coalition",    start: "May 1940", end: "Jul 1945", wiki: "Winston_Churchill" },
-    { name: "Neville Chamberlain",      party: "conservative", start: "May 1937", end: "May 1940", wiki: "Neville_Chamberlain" },
-    { name: "Stanley Baldwin",          party: "conservative", start: "Jun 1935", end: "May 1937", wiki: "Stanley_Baldwin" },
-    { name: "Ramsay MacDonald",         party: "national",     start: "Jun 1929", end: "Jun 1935", wiki: "Ramsay_MacDonald" },
-    { name: "Stanley Baldwin",          party: "conservative", start: "Nov 1924", end: "Jun 1929", wiki: "Stanley_Baldwin" },
-    { name: "Ramsay MacDonald",         party: "labour",       start: "Jan 1924", end: "Nov 1924", wiki: "Ramsay_MacDonald" },
-    { name: "Stanley Baldwin",          party: "conservative", start: "May 1923", end: "Jan 1924", wiki: "Stanley_Baldwin" },
-    { name: "Andrew Bonar Law",         party: "conservative", start: "Oct 1922", end: "May 1923", wiki: "Andrew_Bonar_Law" },
-    { name: "David Lloyd George",       party: "liberal",      start: "Dec 1916", end: "Oct 1922", wiki: "David_Lloyd_George" },
-    { name: "H.H. Asquith",            party: "liberal",      start: "Apr 1908", end: "Dec 1916", wiki: "H._H._Asquith" },
-    { name: "Henry Campbell-Bannerman", party: "liberal",      start: "Dec 1905", end: "Apr 1908", wiki: "Henry_Campbell-Bannerman" },
-    { name: "Arthur Balfour",           party: "conservative", start: "Jul 1902", end: "Dec 1905", wiki: "Arthur_Balfour" },
-    { name: "Lord Salisbury",           party: "conservative", start: "Jun 1895", end: "Jul 1902", wiki: "Robert_Gascoyne-Cecil,_3rd_Marquess_of_Salisbury" },
-  ];
+            const container = document.getElementById("pms");
+            pms.forEach(function (pm) {
+                var isCurrent = pm.end === null;
+                var verb = isCurrent ? "is" : "was";
+                var dates = isCurrent
+                    ? "Prime Minister since " + pm.start
+                    : "Prime Minister " + pm.start + " – " + pm.end;
 
-  const container = document.getElementById('pms');
-  pms.forEach(function(pm) {
-    var isCurrent = pm.end === null;
-    var verb = isCurrent ? 'is' : 'was';
-    var dates = isCurrent
-      ? 'Prime Minister since ' + pm.start
-      : 'Prime Minister ' + pm.start + ' – ' + pm.end;
+                var section = document.createElement("section");
+                section.className = pm.party;
+                section.innerHTML =
+                    '<div class="pm-card">' +
+                    '<h1><a href="https://en.wikipedia.org/wiki/' +
+                    pm.wiki +
+                    '">' +
+                    pm.name +
+                    "</a></h1>" +
+                    "<p>" +
+                    pm.name +
+                    " " +
+                    verb +
+                    ' the <a href="https://en.wikipedia.org/wiki/Prime_Minister_of_the_United_Kingdom">Prime Minister</a> of the <a href="https://en.wikipedia.org/wiki/United_Kingdom">United Kingdom</a>.</p>' +
+                    '<p class="pm-dates">' +
+                    dates +
+                    "</p>" +
+                    "</div>";
+                container.appendChild(section);
+            });
+        </script>
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i["GoogleAnalyticsObject"] = r;
+                ((i[r] =
+                    i[r] ||
+                    function () {
+                        (i[r].q = i[r].q || []).push(arguments);
+                    }),
+                    (i[r].l = 1 * new Date()));
+                ((a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]));
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m);
+            })(
+                window,
+                document,
+                "script",
+                "https://www.google-analytics.com/analytics.js",
+                "ga",
+            );
 
-    var section = document.createElement('section');
-    section.className = pm.party;
-    section.innerHTML =
-      '<div class="pm-card">' +
-        '<h1><a href="https://en.wikipedia.org/wiki/' + pm.wiki + '">' + pm.name + '</a></h1>' +
-        '<p>' + pm.name + ' ' + verb + ' the <a href="https://en.wikipedia.org/wiki/Prime_Minister_of_the_United_Kingdom">Prime Minister</a> of the <a href="https://en.wikipedia.org/wiki/United_Kingdom">United Kingdom</a>.</p>' +
-        '<p class="pm-dates">' + dates + '</p>' +
-      '</div>';
-    container.appendChild(section);
-  });
-  </script>
-  <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-80563062-1', 'auto');
-  ga('send', 'pageview');
-  </script>
-  <!-- made by @galvogalvo -->
-</body>
+            ga("create", "UA-80563062-1", "auto");
+            ga("send", "pageview");
+        </script>
+        <!-- made by @galvogalvo -->
+    </body>
 </html>
